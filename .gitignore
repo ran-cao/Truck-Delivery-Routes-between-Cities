@@ -1,23 +1,68 @@
-# Compiled class file
-*.class
+import java.util.*;
+/**
+ * Write a description of class ExperimentController here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class ExperimentController
+{
+    private City initialCity;
+    /**
+     * Constructor for objects of class ExperimentController
+     */
+    public static void main(String[] args){
+        ExperimentController r = new ExperimentController();
+        r.run();
+    }
 
-# Log file
-*.log
+    public void run(){
+        Scanner sc = null;
+        PrintWriter printWriter = null;
+         try{
+            //create a scanner to scan the input file 
+            sc = new Scanner (new FileReader("center.txt"));
+            String center = sc.nextLine();
+            initialCity = new initialCity(center);
+            
+            // check initialCity's closest warehouse 
+            Warehouse nextWarehouse = initialCity.closestWarehouse(City initialCity);
+            truckTravelling(nextWarehouse);
+            
+            
+        } catch (Exception e){
+           // catch the expection
+           System.out.println("Exception Occurrred"+e);
+        }
+    }
+    
+    public void truckTravelling(WareHouse warehouse){
+        Truck t = new Trunk();
+        int truckDistance=0;
+            
+            // go to next warehouse
+            Warehouse nextWarehouse = warehouse.getClosestWarehouse();
+            if(nextWarehouse==null){                
+                System.out.println("no closest warehouse in the neighborhood, to go check neighbor's neighbor");
+                City neighbor = 
+                int cargos=t.deliver(neighbor);
+                System.out.println(cargos+"cargos in the city #"+neighbor.getId());
+                totalDistance+=t.getDistance();
+            }else{
+                ArrayList<Integer> allCargoWeightFromASingleWarehouse = new ArrayList<Integer>();
+                while(t.getCargoWeight()<MaxCapacity){   
+                     PriorityQueue<Cargo> warehouseCargo = warehouse.getCargoList();
+                     while(warehouseCargo.peek()<t.getCargoWeight()){
+                          int cargoWeight = warehouseCargo.poll();
+                          t.deliver(cargoWeight,initialCity);
+                            } 
+                        }
+                System.out.println(cargos+" cargos in the  #"+initialCity.getId());
+                totalDistance+=t.getDistance();
+            }
+            truckDistance+=t.getDistance();
+        }
+        System.out.println("Total Distance travelled by the truck= "+truckDistance);
+        totalDistance+=truckDistance;
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+    }
