@@ -1,68 +1,55 @@
-import java.util.*;
 /**
- * Write a description of class ExperimentController here.
+ * Write a description of class Truck here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ExperimentController
+public class Truck
 {
-    private City initialCity;
-    /**
-     * Constructor for objects of class ExperimentController
-     */
-    public static void main(String[] args){
-        ExperimentController r = new ExperimentController();
-        r.run();
-    }
-
-    public void run(){
-        Scanner sc = null;
-        PrintWriter printWriter = null;
-         try{
-            //create a scanner to scan the input file 
-            sc = new Scanner (new FileReader("center.txt"));
-            String center = sc.nextLine();
-            initialCity = new initialCity(center);
-            
-            // check initialCity's closest warehouse 
-            Warehouse nextWarehouse = initialCity.closestWarehouse(City initialCity);
-            truckTravelling(nextWarehouse);
-            
-            
-        } catch (Exception e){
-           // catch the expection
-           System.out.println("Exception Occurrred"+e);
-        }
+    private int MaxCargo = 500;
+    private int currentWeight;
+    private int initialDistance = 0;
+    private Warehouse currentWarehouse;
+    private Vertex currentCity; // where the truck is currently positioned 
+    private PriorityQueue<City> city;
+    
+    public Truck(Warehouse location){
+        currentWeight = 500;
+        currentWarehouse = location;
+        currentCity = location;
     }
     
-    public void truckTravelling(WareHouse warehouse){
-        Truck t = new Trunk();
-        int truckDistance=0;
+    public void deliver(int cargoWeight, City startCity){ 
+        int distance=city.distanceTo(startCity);
+         if(currentWeight-w<0){
+            // if truck cannot take another cargo, it should go back 
             
-            // go to next warehouse
-            Warehouse nextWarehouse = warehouse.getClosestWarehouse();
-            if(nextWarehouse==null){                
-                System.out.println("no closest warehouse in the neighborhood, to go check neighbor's neighbor");
-                City neighbor = 
-                int cargos=t.deliver(neighbor);
-                System.out.println(cargos+"cargos in the city #"+neighbor.getId());
-                totalDistance+=t.getDistance();
-            }else{
-                ArrayList<Integer> allCargoWeightFromASingleWarehouse = new ArrayList<Integer>();
-                while(t.getCargoWeight()<MaxCapacity){   
-                     PriorityQueue<Cargo> warehouseCargo = warehouse.getCargoList();
-                     while(warehouseCargo.peek()<t.getCargoWeight()){
-                          int cargoWeight = warehouseCargo.poll();
-                          t.deliver(cargoWeight,initialCity);
-                            } 
-                        }
-                System.out.println(cargos+" cargos in the  #"+initialCity.getId());
-                totalDistance+=t.getDistance();
-            }
-            truckDistance+=t.getDistance();
+            initialDistance+=distance;
+            currentPosition=city;
+            
+            return true;
+        }else{
+            currentWeight=currentWeight-cargoWeight;
+            initialDistance+=distance;
+            currentPosition=city;
+            return true;
         }
-        System.out.println("Total Distance travelled by the truck= "+truckDistance);
-        totalDistance+=truckDistance;
-
+    }            
+        
+    public void setDistance(int x){
+        distance = distance+x;
     }
+    
+    public int getDistance(){
+        return distance;
+    }
+    
+    // return the cargo's current weight
+    public int getCargoWeight(){
+        return currentWeight;
+    }
+    
+    public Vertex getCurrentCity(){
+        return currentCity;
+    }
+}
