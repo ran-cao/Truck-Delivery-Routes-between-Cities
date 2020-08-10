@@ -19,8 +19,8 @@ After running the program, we were expected to see that our result match up with
 
 ### Our ultimate goal was to minimize the total traveled distance
 Two methods to perform our “greedy” approach: 
-- To optimize the program, we reconstructed our model by choosing the road with less value of distance per cargo (distance divided by the number of cargos that could be delivered to the warehouse). 
-- Extra cost: for the road with distance was greater than C, the value of distance per cargo would be double for weighting long distance road less important. 
+- Version1: To optimize the program, we reconstructed our model by choosing the road with less value of distance per cargo (distance divided by the number of cargos that could be delivered to the warehouse). 
+- Version2 Applying Extra cost: for the road with distance was greater than C, the value of distance per cargo would be double for weighting long distance road less important. 
 
 For hypothesis, second approach was believed to have a better performance. 
 This experiment was to find out the optimal C value and aimed to shorten the total traveled distance by 10%.
@@ -39,3 +39,14 @@ Six classes were designed for this project: Road, City, Warehouse, Cargo, Truck,
 `Truck.java` class worked for creating truck objects. The truck objects recorded the total distance that it traveled and contained all the cargo objects it “delivered to the warehouses”. The truck class provided shipment method which checked whether the truck would ship any cargo to the given next city(warehouse). In addition, if the shipment was available, the truck would go to the next given city, deliver cargos, and print out the shipment information. 
 
 `ExperimentController.java` served for two main tasks: setting up the graph and conducting the experiment. The ExperimentController class provided read and add methods for reading given files and setting up the graph. In addition, the ExperimentController class provided shortest path method through implementing revised version Dijkstra’s algorithm. The revised version Dijkstra’s algorithm would create ArrayList of neighbors with increasing distance order and calculate the distance from the city to the center city. The experiment was conducted by trucks delivering cargos to warehouses. For the normal version ExperimentController, the truck would check the closest road whether the shipment was available to the city connected by this road. The truck would go there if the shipment was available. Otherwise, the truck would check the second closest road. Those processes were recursively called for the truck until either the remaining capacity could not support any shipment to adjacent city or there was no more warehouse needed to be delivered cargos. For the first scenario, the truck would return and the ExperimentController would send a new truck. For the second situation, the experiment finished. For the extra point version, instead of checking the closest city, the truck would check the road with the smallest value of distance per cargo. In addition, for the road with distance was greater than 35, the value of distance per cargo would be double for weighting long distance road less important.
+
+### Results
+With the first version, 79 trucks were sent out and the total distance traveled was 8846. However, we aimed to optimize this result, and we ran our second version. Figure below is the potential values of C:
+
+![C Values With Corresponding Distance](https://github.com/ran-cao/CS150_Truck-Delivery-Routes-between-Cities/blob/master/result/C%20Values%20With%20Corresponding%20Distance.png)
+
+Initially the C value was from 1 to 100 with a gap equaled 5. This figure shows that total distance traveled varied when C value was small but the curve got flat when C was bigger than 60, which was the reason that the result was not graphed when C was bigger than 100. Among these points, total distance traveled reached a minimum point when C value was 35. Then tested the C value close to 35 (increment by 1) but it turned out that 35 was still the minimum. With C equaled to 35, 78 trucks in total traveled 8000 to disperse the cargo. 
+
+### Limitation
+There might exist a even smaller C value, because not all results were simulated. The result would be further tested if the gap was changed to 1, instead of 5. 
+
